@@ -1,5 +1,7 @@
 import typer
 import fetch
+import ai
+from datetime import datetime, timedelta
 from api.config import api_key_stock
 from alpaca.trading.enums import OrderSide, TimeInForce
 
@@ -67,15 +69,45 @@ def Trade(
     fetch.buy_stock(ticker, quantity, slide, Time_In_Force)
 
 @app.command()
-def Account(
-    name: str = typer.Option(
-        'John',
-        '--name',
-        '-n',
-        help="Enter your name"
+def Ai(
+    ticker: str = typer.Option(
+        'AAPL',
+        '--ticker',
+        '-t',
+        help="Gives a prediction based off the stock ticker entered"  
+    ),
+    month: str = typer.Option(
+        '1',
+        '--month',
+        '-m',
+        help="Gets the final month"
+    ),
+    day: str = typer.Option(
+        '1',
+        '--day',
+        '-d',
+        help="Gets the final day"
+    ),
+    year: str = typer.Option(
+        '2023',
+        '--year',
+        "-y",
+        help="Gets the final year"
+    ),
+    query: str = typer.Option(
+        "Based of the data given what was the price of the stock at the begining of the data and the end of the data, and what is the difference between beginning and end",
+        '--query',
+        '-q',
+        help="Query GPT and get output based off data provided"
     )
-):
-    fetch.get_account(name)
+): 
+    fetch.get_historical_data(ticker, year, month, day)
+    ai.get_stock_suggestion(query)
+
+
+@app.command()
+def Account():
+    fetch.get_account() # gets account balance
 
 
     
