@@ -21,3 +21,5 @@ def get_stock_suggestion(query):
 
     qa = RetrievalQA.from_chain_type(llm=OpenAI(), chain_type="stuff", retriever=docsearch.as_retriever(search_kwargs={"k": 1}))
     print(qa.run(query))
+
+#improved ai here
