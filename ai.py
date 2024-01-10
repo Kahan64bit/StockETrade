@@ -23,3 +23,6 @@ def get_stock_suggestion(query):
     print(qa.run(query))
 
 #improved ai here
+
+def get_trend():
+    pass
